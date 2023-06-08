@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
               height: 80,
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     "Login",
@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.black,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
                     topRight: Radius.circular(60),
@@ -87,7 +87,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    hintText: "Email or Phone number",
+                                    hintText: "PICT unique ID no.",
                                     hintStyle: TextStyle(color: Colors.grey),
                                     border: InputBorder.none,
                                   ),
@@ -126,7 +126,7 @@ class HomePage extends StatelessWidget {
                           margin: EdgeInsets.symmetric(horizontal: 50),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Colors.orange,
+                            color: Colors.orangeAccent,
                           ),
                           child: Center(
                             child: Text(
@@ -155,7 +155,7 @@ class HomePage extends StatelessWidget {
                                 height: 50,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
-                                  color: Colors.blue,
+                                  color: Colors.lightBlue,
                                 ),
                                 child: Center(
                                   child: Text(
@@ -176,7 +176,7 @@ class HomePage extends StatelessWidget {
                                 height: 50,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
-                                  color: Colors.black,
+                                  color: Colors.lightBlue,
                                 ),
                                 child: Center(
                                   child: Text(
