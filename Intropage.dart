@@ -11,9 +11,9 @@ class Intropage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          color: Colors.black,
+          color: Colors.white,
           child: Column(
-            children:[
+            children: [
               Text(
                 "WELCOME TO READING HALL SEAT VACANCY MANAGEMENT APP",
                 style: TextStyle(
@@ -26,7 +26,7 @@ class Intropage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()),
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 },
                 child: Text("CLICK HERE TO CONTINUE"),
