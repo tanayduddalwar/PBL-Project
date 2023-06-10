@@ -7,17 +7,18 @@ class Intropage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Intro"),
+        title: Text("Intro",textAlign: TextAlign.center,),
       ),
       body: Center(
         child: Container(
-          color: Colors.white,
+          color: Colors.black,
           child: Column(
-            children: [
+            children:[
               Text(
                 "WELCOME TO READING HALL SEAT VACANCY MANAGEMENT APP",
                 style: TextStyle(
                   fontSize: 30,
+                  color: Color.lerp(a, b, t),
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
@@ -38,3 +39,4 @@ class Intropage extends StatelessWidget {
     );
   }
 }
+
