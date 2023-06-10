@@ -16,7 +16,7 @@ class _SplashscreenState extends State<Splashscreen> {
     
     super.initState();
     Timer(Duration(seconds: 6), () { 
-      Navigator.pushReplacement(context,MaterialPageRoute(builder:(context)=>Intropage())); 
+      Navigator.pushReplacement(context,MaterialPageRoute(builder:(context)=>Intropage(),)); 
 
     });
     
