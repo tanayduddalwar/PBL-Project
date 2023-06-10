@@ -7,11 +7,19 @@ class Intropage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Intro",textAlign: TextAlign.center,),
+        title: Center(
+          child: Text(
+            "INTRO",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
       body: Center(
         child: Container(
-          color: Colors.black,
+          color: Colors.white,
           child: Column(
             children:[
               Text(
