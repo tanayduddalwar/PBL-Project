@@ -7,15 +7,7 @@ class Intropage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            "INTRO",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        title: Text("Intro",textAlign:TextAlign.right),
       ),
       body: Center(
         child: Container(
@@ -31,6 +23,7 @@ class Intropage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+              Image.asset("assets/images/reading-logo-5.jpg"),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
