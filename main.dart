@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_project/IntroPage.dart';
+import 'package:vacseat/intropage.dart';
+import 'package:vacseat/splash.dart';
+
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Splashscreen(),
