@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vacseat/intropage.dart';
@@ -13,14 +12,16 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
-    
     super.initState();
-    Timer(Duration(seconds: 6), () { 
-      Navigator.pushReplacement(context,MaterialPageRoute(builder:(context)=>Intropage(),)); 
-
+    Timer(Duration(seconds: 6), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Intropage(),
+          ));
     });
-    
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
