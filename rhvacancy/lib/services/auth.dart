@@ -7,54 +7,39 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //create user object based on firebaseuser
-  Users? _userFromFirebaseUser(User? user) {
-    return user != null ? Users(uid: user.uid) : null;
+  UserModel? userFromFirebaseUser(User? user) {
+    return user != null ? UserModel(uid: user.uid) : null;
   }
 
 //auth change user stream
-  Stream<Users?> get user {
+  Stream<UserModel?> get user {
     return _auth
         .authStateChanges()
         // .map((User? user) => _userFromFirebaseUser(user));
-        .map(_userFromFirebaseUser);
+        .map(userFromFirebaseUser);
   }
 
 //sign in anon
   Future signInAnon() async {
-    try {
-      UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+    UserCredential result = await _auth.signInAnonymously();
+    User? user = result.user;
+    return userFromFirebaseUser(user);
   }
 
 // register
-  Future registerWithEmailAndPassword(String email, String password) async {
-    try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+  Future registerWithEmailAndPassword(email, password) async {
+    UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    User? user = result.user;
+    return userFromFirebaseUser(user);
   }
 
 // sign in email
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+  Future signInWithEmailAndPassword(email, password) async {
+    UserCredential result = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
+    User? user = result.user;
+    return userFromFirebaseUser(user);
   }
 
 // sign out
