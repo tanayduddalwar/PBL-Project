@@ -1,36 +1,35 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rhvacancy/models/user.dart';
-import 'package:rhvacancy/screens/authenticate/sign_in.dart';
+import 'package:rhvacancy/screens/authenticate/forget_password.dart';
+import 'package:rhvacancy/screens/authenticate/register.dart';
 import 'package:rhvacancy/screens/home/home.dart';
 import 'package:rhvacancy/services/auth.dart';
 import 'package:rhvacancy/shared/loading.dart';
 // import 'package:rhvacancy/services/auth.dart';
 
-class Register extends StatefulWidget {
+class SignIn extends StatefulWidget {
   final toggleView;
-  const Register({Key? key, this.toggleView}) : super(key: key);
-  // const Register({super.key});
+  const SignIn({Key? key, this.toggleView}) : super(key: key);
+  // const SignIn({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _RegisterState extends State<Register> {
-  final formkey = GlobalKey<FormState>();
+class _SignInState extends State<SignIn> {
+  // instance is created to use type _auth.signinanon
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final cpassword = TextEditingController();
-  final firstname = TextEditingController();
-  final lastname = TextEditingController();
-  final pictid = TextEditingController();
-
   bool loading = false;
+  // final AuthService _auth = AuthService();
+  final formkey = GlobalKey<FormState>();
+  String error1 = '';
 
-  String passworderror = '';
+  var email = "";
+  var password = "";
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +39,14 @@ class _RegisterState extends State<Register> {
             body: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Colors.deepPurple,
-                    Colors.white,
-                  ],
-                ),
-              ),
+                  gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Colors.deepPurple,
+                  Colors.white,
+                ],
+              )),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -61,14 +59,14 @@ class _RegisterState extends State<Register> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "SIGN UP",
+                          "SIGN IN",
                           style: TextStyle(color: Colors.white, fontSize: 40),
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
-                          "WELCOME TO VACSEAT",
+                          "sign in to continue",
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ],
@@ -111,9 +109,9 @@ class _RegisterState extends State<Register> {
                                                 bottom: BorderSide(
                                                     color: Colors.grey))),
                                         child: TextFormField(
+                                          controller: emailController,
                                           keyboardType:
                                               TextInputType.emailAddress,
-                                          controller: emailController,
                                           decoration: InputDecoration(
                                               hintText: "Enter Your Email",
                                               hintStyle:
@@ -122,53 +120,8 @@ class _RegisterState extends State<Register> {
                                           validator: (email) => email != null &&
                                                   !EmailValidator.validate(
                                                       email)
-                                              ? 'Enter a valid email'
+                                              ? 'Enter valid Email'
                                               : null,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey))),
-                                        child: TextFormField(
-                                          controller: firstname,
-                                          decoration: InputDecoration(
-                                              hintText: "First Name",
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey),
-                                              border: InputBorder.none),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey))),
-                                        child: TextFormField(
-                                          controller: lastname,
-                                          decoration: InputDecoration(
-                                              hintText: "Last Name",
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey),
-                                              border: InputBorder.none),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey))),
-                                        child: TextFormField(
-                                          controller: pictid,
-                                          decoration: InputDecoration(
-                                              hintText: "PICT Unique ID",
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey),
-                                              border: InputBorder.none),
                                         ),
                                       ),
                                       Container(
@@ -179,32 +132,16 @@ class _RegisterState extends State<Register> {
                                                     color: Colors.grey))),
                                         child: TextFormField(
                                           controller: passwordController,
-                                          obscureText: true,
                                           decoration: InputDecoration(
-                                              hintText: "Enter a password",
+                                              hintText: "Enter Password",
                                               hintStyle:
                                                   TextStyle(color: Colors.grey),
                                               border: InputBorder.none),
-                                          validator: (value) => value != null &&
-                                                  value.length < 8
-                                              ? 'Enter password atleast 8 chars'
-                                              : null,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey))),
-                                        child: TextFormField(
                                           obscureText: true,
-                                          controller: cpassword,
-                                          decoration: InputDecoration(
-                                              hintText: "Confirm Your Password",
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey),
-                                              border: InputBorder.none),
+                                          validator: (value) =>
+                                              value != null && value.length < 8
+                                                  ? 'Enter valid password'
+                                                  : null,
                                         ),
                                       ),
                                     ],
@@ -220,40 +157,36 @@ class _RegisterState extends State<Register> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.deepPurple,
                                     ),
+                                    child: Text(
+                                      'SIGN IN',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                     onPressed: () async {
-                                      if (passwordController.text.trim() !=
-                                          cpassword.text.trim()) {
-                                        setState(() => passworderror =
-                                            "passwords don't match");
-                                      } else {
-                                        if (formkey.currentState!.validate()) {
+                                      if (formkey.currentState!.validate()) {
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        AuthService()
+                                            .signInWithEmailAndPassword(
+                                                emailController.text.trim(),
+                                                passwordController.text)
+                                            .then((value) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Home()));
+                                        }).catchError((e) {
                                           setState(() {
-                                            loading = true;
+                                            loading = false;
                                           });
-                                          AuthService()
-                                              .registerWithEmailAndPassword(
-                                                  emailController.text.trim(),
-                                                  passwordController.text)
-                                              .then((value) {
-                                            postDetailsToFirestore();
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Home()));
-                                          }).catchError((e) {
-                                            setState(() {
-                                              loading = false;
-                                            });
-                                            Fluttertoast.showToast(
-                                                msg: 'USER ALREADY EXISTS',
-                                                backgroundColor: Colors
-                                                    .deepPurpleAccent[150]);
-                                          });
-                                        }
+                                          Fluttertoast.showToast(
+                                              msg: 'INVALID USER CREDENTIALS',
+                                              backgroundColor:
+                                                  Colors.deepPurpleAccent[150]);
+                                        });
                                       }
                                     },
-                                    child: Text('SIGN UP'),
                                   ),
                                 ),
                               ),
@@ -261,22 +194,35 @@ class _RegisterState extends State<Register> {
                                 height: 5,
                               ),
                               Text(
-                                passworderror,
+                                error,
                                 style: TextStyle(
                                     color: Colors.red, fontSize: 14.0),
                               ),
                               SizedBox(
-                                height: 5,
+                                height: 10,
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignIn()));
+                                          builder: (context) =>
+                                              ForgetPassword()));
+                                },
+                                child: Text("Forget Password? Click Here"),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Register()));
                                 },
                                 child:
-                                    Text("Already Have an Account? Click Here"),
+                                    Text("Don't Have an Account? Click Here"),
                               ),
                             ],
                           ),
@@ -288,25 +234,5 @@ class _RegisterState extends State<Register> {
               ),
             ),
           );
-  }
-
-  postDetailsToFirestore() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = FirebaseAuth.instance.currentUser!;
-
-    UserModel userModel = UserModel();
-
-    userModel.email = user.email;
-    userModel.firstname = firstname.text;
-    userModel.lastname = lastname.text;
-    userModel.pictid = pictid.text;
-
-    await firebaseFirestore
-        .collection('UserModel')
-        .doc(user.uid)
-        .set(userModel.toMap());
-    Fluttertoast.showToast(
-        msg: "Account created Successfully!",
-        backgroundColor: Colors.deepPurpleAccent[150]);
   }
 }
