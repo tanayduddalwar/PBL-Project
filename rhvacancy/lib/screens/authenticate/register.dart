@@ -1,35 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rhvacancy/screens/authenticate/forget_password.dart';
-import 'package:rhvacancy/screens/authenticate/register.dart';
+import 'package:rhvacancy/models/user.dart';
+import 'package:rhvacancy/screens/authenticate/sign_in.dart';
 import 'package:rhvacancy/screens/home/home.dart';
 import 'package:rhvacancy/services/auth.dart';
 import 'package:rhvacancy/shared/loading.dart';
 // import 'package:rhvacancy/services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final toggleView;
-  const SignIn({Key? key, this.toggleView}) : super(key: key);
-  // const SignIn({super.key});
+  const Register({Key? key, this.toggleView}) : super(key: key);
+  // const Register({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
-  // instance is created to use type _auth.signinanon
+class _RegisterState extends State<Register> {
+  final formkey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool loading = false;
-  // final AuthService _auth = AuthService();
-  final formkey = GlobalKey<FormState>();
-  String error1 = '';
+  final cpassword = TextEditingController();
+  final firstname = TextEditingController();
+  final lastname = TextEditingController();
+  final pictid = TextEditingController();
 
-  var email = "";
-  var password = "";
-  String error = "";
+  bool loading = false;
+
+  String passworderror = '';
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +40,15 @@ class _SignInState extends State<SignIn> {
             body: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Colors.deepPurple,
-                  Colors.white,
-                ],
-              )),
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Colors.deepPurple,
+                    Colors.white,
+                  ],
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -59,14 +61,14 @@ class _SignInState extends State<SignIn> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "SIGN IN",
+                          "SIGN UP",
                           style: TextStyle(color: Colors.white, fontSize: 40),
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         Text(
-                          "sign in to continue",
+                          "WELCOME TO VACSEAT",
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ],
@@ -109,9 +111,9 @@ class _SignInState extends State<SignIn> {
                                                 bottom: BorderSide(
                                                     color: Colors.grey))),
                                         child: TextFormField(
-                                          controller: emailController,
                                           keyboardType:
                                               TextInputType.emailAddress,
+                                          controller: emailController,
                                           decoration: InputDecoration(
                                               hintText: "Enter Your Email",
                                               hintStyle:
@@ -120,7 +122,7 @@ class _SignInState extends State<SignIn> {
                                           validator: (email) => email != null &&
                                                   !EmailValidator.validate(
                                                       email)
-                                              ? 'Enter valid Email'
+                                              ? 'Enter a valid email'
                                               : null,
                                         ),
                                       ),
@@ -131,17 +133,78 @@ class _SignInState extends State<SignIn> {
                                                 bottom: BorderSide(
                                                     color: Colors.grey))),
                                         child: TextFormField(
-                                          controller: passwordController,
+                                          controller: firstname,
                                           decoration: InputDecoration(
-                                              hintText: "Enter Password",
+                                              hintText: "First Name",
                                               hintStyle:
                                                   TextStyle(color: Colors.grey),
                                               border: InputBorder.none),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey))),
+                                        child: TextFormField(
+                                          controller: lastname,
+                                          decoration: InputDecoration(
+                                              hintText: "Last Name",
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey),
+                                              border: InputBorder.none),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey))),
+                                        child: TextFormField(
+                                          controller: pictid,
+                                          decoration: InputDecoration(
+                                              hintText: "PICT Unique ID",
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey),
+                                              border: InputBorder.none),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey))),
+                                        child: TextFormField(
+                                          controller: passwordController,
                                           obscureText: true,
-                                          validator: (value) =>
-                                              value != null && value.length < 8
-                                                  ? 'Enter valid password'
-                                                  : null,
+                                          decoration: InputDecoration(
+                                              hintText: "Enter a password",
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey),
+                                              border: InputBorder.none),
+                                          validator: (value) => value != null &&
+                                                  value.length < 8
+                                              ? 'Enter password atleast 8 chars'
+                                              : null,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey))),
+                                        child: TextFormField(
+                                          obscureText: true,
+                                          controller: cpassword,
+                                          decoration: InputDecoration(
+                                              hintText: "Confirm Your Password",
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey),
+                                              border: InputBorder.none),
                                         ),
                                       ),
                                     ],
@@ -157,36 +220,40 @@ class _SignInState extends State<SignIn> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.deepPurple,
                                     ),
-                                    child: Text(
-                                      'SIGN IN',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
                                     onPressed: () async {
-                                      if (formkey.currentState!.validate()) {
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        AuthService()
-                                            .signInWithEmailAndPassword(
-                                                emailController.text.trim(),
-                                                passwordController.text)
-                                            .then((value) {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Home()));
-                                        }).catchError((e) {
+                                      if (passwordController.text.trim() !=
+                                          cpassword.text.trim()) {
+                                        setState(() => passworderror =
+                                            "passwords don't match");
+                                      } else {
+                                        if (formkey.currentState!.validate()) {
                                           setState(() {
-                                            loading = false;
+                                            loading = true;
                                           });
-                                          Fluttertoast.showToast(
-                                              msg: 'INVALID USER CREDENTIALS',
-                                              backgroundColor:
-                                                  Colors.deepPurpleAccent[150]);
-                                        });
+                                          AuthService()
+                                              .registerWithEmailAndPassword(
+                                                  emailController.text.trim(),
+                                                  passwordController.text)
+                                              .then((value) {
+                                            postDetailsToFirestore();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Home()));
+                                          }).catchError((e) {
+                                            setState(() {
+                                              loading = false;
+                                            });
+                                            Fluttertoast.showToast(
+                                                msg: 'USER ALREADY EXISTS',
+                                                backgroundColor: Colors
+                                                    .deepPurpleAccent[150]);
+                                          });
+                                        }
                                       }
                                     },
+                                    child: Text('SIGN UP'),
                                   ),
                                 ),
                               ),
@@ -194,35 +261,22 @@ class _SignInState extends State<SignIn> {
                                 height: 5,
                               ),
                               Text(
-                                error,
+                                passworderror,
                                 style: TextStyle(
                                     color: Colors.red, fontSize: 14.0),
                               ),
                               SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              ForgetPassword()));
-                                },
-                                child: Text("Forget Password? Click Here"),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Register()));
+                                          builder: (context) => SignIn()));
                                 },
                                 child:
-                                    Text("Don't Have an Account? Click Here"),
+                                    Text("Already Have an Account? Click Here"),
                               ),
                             ],
                           ),
@@ -234,5 +288,25 @@ class _SignInState extends State<SignIn> {
               ),
             ),
           );
+  }
+
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser!;
+
+    UserModel userModel = UserModel();
+
+    userModel.email = user.email;
+    userModel.firstname = firstname.text;
+    userModel.lastname = lastname.text;
+    userModel.pictid = pictid.text;
+
+    await firebaseFirestore
+        .collection('UserModel')
+        .doc(user.uid)
+        .set(userModel.toMap());
+    Fluttertoast.showToast(
+        msg: "Account created Successfully!",
+        backgroundColor: Colors.deepPurpleAccent[150]);
   }
 }
