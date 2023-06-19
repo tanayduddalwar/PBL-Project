@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:rhvacancy/main.dart';
 import 'package:rhvacancy/screens/wrapper.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -26,15 +25,17 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.blue,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/image.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Text(
             "READVAC",
-            textAlign: TextAlign.center, // Align text at the center
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 34,
               fontWeight: FontWeight.w700,
@@ -43,6 +44,6 @@ class _SplashscreenState extends State<Splashscreen> {
           ),
         ),
       ),
-    ));
+    );
   }
 }
