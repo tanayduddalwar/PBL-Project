@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "672169548286",
+    "project_id": "rhvacancy-4a3e3",
+    "storage_bucket": "rhvacancy-4a3e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672169548286:android:cadce7b4d2e305562888af",
+        "android_client_info": {
+          "package_name": "com.example.rhvacancy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672169548286-rq3euncnitvskr67mv3misqmfi5luoqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF6oA6lNeS_XeeYO2m8GVoE4hNMssrj0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672169548286-rq3euncnitvskr67mv3misqmfi5luoqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
